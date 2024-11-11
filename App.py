@@ -21,7 +21,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from sklearn.model_selection import learning_curve
-import io
+import pickle
 warnings.filterwarnings('ignore')
 
 class DataGenerator:
@@ -134,22 +134,25 @@ class ModelManager:
                 return X - min_val
             return X
 
-    @staticmethod
     def save_model(self, model_dict, model_name):
-        """Save model and its scaler to bytes for downloading"""
+        """Save model and its scaler to files"""
+        if not os.path.exists('models'):
+            os.makedirs('models')
+        
+        base_filename = f"{model_name}"
+        
         if hasattr(model_dict['model'], 'feature_names_in_'):
             model_dict['scaler'].feature_names_in_ = model_dict['model'].feature_names_in_
         elif hasattr(st.session_state, 'features'):
             model_dict['scaler'].feature_names_in_ = np.array(st.session_state.features)
         
-        # Save model and scaler to bytes
-        model_bytes = io.BytesIO()
-        scaler_bytes = io.BytesIO()
+        model_path = os.path.join('models', f"{base_filename}_model.joblib")
+        scaler_path = os.path.join('models', f"{base_filename}_scaler.joblib")
         
-        joblib.dump(model_dict['model'], model_bytes)
-        joblib.dump(model_dict['scaler'], scaler_bytes)
+        joblib.dump(model_dict['model'], model_path)
+        joblib.dump(model_dict['scaler'], scaler_path)
         
-        return model_bytes.getvalue(), scaler_bytes.getvalue()
+        return model_path, scaler_path
 
     def train_and_evaluate_model(self, clf_dict, X_train, X_test, y_train, y_test, model_name):
         """Train and evaluate a single model"""
@@ -182,7 +185,7 @@ class ModelManager:
             accuracy = accuracy_score(y_test, y_pred)
             training_time = time.time() - start_time
             
-            model_bytes, scaler_bytes = self.save_model(clf_dict, model_name)
+            model_path, scaler_path = self.save_model(clf_dict, model_name)
             conf_matrix = confusion_matrix(y_test, y_pred)
             
             return {
@@ -192,8 +195,8 @@ class ModelManager:
                 'model': clf_dict['model'],
                 'predictions': y_pred,
                 'status': 'success',
-                'scaler_bytes': scaler_bytes,
-                'model_bytes': model_bytes,
+                'scaler': scaler_path,
+                'model_path': model_path,
                 'confusion_matrix': conf_matrix
             }
         except Exception as e:
@@ -204,8 +207,8 @@ class ModelManager:
                 'model': None,
                 'predictions': None,
                 'status': f'failed: {str(e)}',
-                'scaler_bytes': None,
-                'model_bytes': None,
+                'scaler': None,
+                'model_path': None,
                 'confusion_matrix': None
             }
 
@@ -913,45 +916,59 @@ class StreamlitUI:
 
     def display_saved_models(self):
         """Display saved models information and download buttons"""
-        st.subheader("Download Trained Models")
-        
+        st.subheader("Saved Models")
         saved_models = []
+        
         for result in st.session_state.model_results:
-            if result['status'] == 'success':
+            if result['status'] == 'success' and result['model_path']:
+                # Load model and scaler
+                model = joblib.load(result['model_path'])
+                scaler = joblib.load(result['scaler'])
+                
+                # Create binary data for download using pickle
+                model_bytes = pickle.dumps(model)
+                scaler_bytes = pickle.dumps(scaler)
+                
                 saved_models.append({
                     'Model': result['model_name'],
                     'Accuracy': result['accuracy'],
-                    'model_bytes': result['model_bytes'],
-                    'scaler_bytes': result['scaler_bytes']
+                    'Model_Binary': model_bytes,
+                    'Scaler_Binary': scaler_bytes
                 })
         
         if saved_models:
-            # Create columns for the table and download buttons
-            for model in saved_models:
-                col1, col2, col3 = st.columns([2, 1, 1])
+            # Display models table
+            display_df = pd.DataFrame([{
+                'Model': m['Model'],
+                'Accuracy': m['Accuracy']
+            } for m in saved_models])
+            
+            st.dataframe(display_df.style.format({
+                'Accuracy': '{:.4f}'
+            }))
+            
+            # Add download buttons for each model
+            st.write("Download Models:")
+            for model_data in saved_models:
+                col1, col2 = st.columns(2)
                 
                 with col1:
-                    st.write(f"**{model['Model']}** (Accuracy: {model['Accuracy']:.4f})")
+                    st.download_button(
+                        label=f"Download {model_data['Model']} Model",
+                        data=model_data['Model_Binary'],
+                        file_name=f"{model_data['Model']}_model.pkl",
+                        mime="application/octet-stream"
+                    )
                 
                 with col2:
                     st.download_button(
-                        label="Download Model",
-                        data=model['model_bytes'],
-                        file_name=f"{model['Model']}_model.joblib",
-                        mime="application/octet-stream",
+                        label=f"Download {model_data['Model']} Scaler",
+                        data=model_data['Scaler_Binary'],
+                        file_name=f"{model_data['Model']}_scaler.pkl",
+                        mime="application/octet-stream"
                     )
-                
-                with col3:
-                    st.download_button(
-                        label="Download Scaler",
-                        data=model['scaler_bytes'],
-                        file_name=f"{model['Model']}_scaler.joblib",
-                        mime="application/octet-stream",
-                    )
-                
-                st.markdown("---")
         else:
-            st.info("No models are available for download. Train models first.")
+            st.info("No models were saved. Models are saved automatically when accuracy exceeds 0.5")
 
     def display_download_section(self):
         """Display dataset download section"""

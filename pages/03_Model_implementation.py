@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
+import pickle
 import os
 from datetime import datetime
 
@@ -24,8 +24,8 @@ def load_model_and_scaler(model_file, scaler_file):
         
         # Generate unique filenames
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        temp_model_path = os.path.join(temp_dir, f'model_{timestamp}.joblib')
-        temp_scaler_path = os.path.join(temp_dir, f'scaler_{timestamp}.joblib')
+        temp_model_path = os.path.join(temp_dir, f'model_{timestamp}.pkl')
+        temp_scaler_path = os.path.join(temp_dir, f'scaler_{timestamp}.pkl')
         
         # Save uploaded files
         with open(temp_model_path, 'wb') as f:
@@ -33,9 +33,11 @@ def load_model_and_scaler(model_file, scaler_file):
         with open(temp_scaler_path, 'wb') as f:
             f.write(scaler_file.getbuffer())
         
-        # Load the files
-        model = joblib.load(temp_model_path)
-        scaler = joblib.load(temp_scaler_path)
+        # Load the files using pickle
+        with open(temp_model_path, 'rb') as f:
+            model = pickle.load(f)
+        with open(temp_scaler_path, 'rb') as f:
+            scaler = pickle.load(f)
         
         # Clean up
         os.remove(temp_model_path)
@@ -123,8 +125,8 @@ def show():
     
     # Keep file uploaders in sidebar
     st.sidebar.subheader("Upload Model Files")
-    model_file = st.sidebar.file_uploader("Upload Model (.joblib)", type=['joblib'])
-    scaler_file = st.sidebar.file_uploader("Upload Scaler (.joblib)", type=['joblib'])
+    model_file = st.sidebar.file_uploader("Upload Model (.pkl)", type=['pkl'])
+    scaler_file = st.sidebar.file_uploader("Upload Scaler (.pkl)", type=['pkl'])
 
     # Only proceed if both files are uploaded
     if model_file and scaler_file:
