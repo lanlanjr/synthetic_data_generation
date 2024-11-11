@@ -401,7 +401,7 @@ class StreamlitUI:
     def setup_page_config(self):
         """Configure the Streamlit page"""
         st.set_page_config(
-            page_title="ML Model Generator & Implementationsssss",
+            page_title="ML Model Generator & Implementations",
             page_icon="🤖",
             layout="wide",
             menu_items={
@@ -1193,7 +1193,7 @@ class StreamlitUI:
         self.setup_page_config()
         self.initialize_session_state()
         
-        st.title("ML Model Generator")
+        st.title("ML Model Generatorssss")
         
         # Get data source choice
         data_source = self.get_data_source()
