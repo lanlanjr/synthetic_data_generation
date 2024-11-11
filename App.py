@@ -401,7 +401,7 @@ class StreamlitUI:
     def setup_page_config(self):
         """Configure the Streamlit page"""
         st.set_page_config(
-            page_title="ML Model Generator & Implementation",
+            page_title="ML Model Generator & Implementationsssss",
             page_icon="🤖",
             layout="wide",
             menu_items={
