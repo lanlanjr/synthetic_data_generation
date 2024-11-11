@@ -21,6 +21,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from sklearn.model_selection import learning_curve
+import io
 warnings.filterwarnings('ignore')
 
 class DataGenerator:
@@ -133,25 +134,22 @@ class ModelManager:
                 return X - min_val
             return X
 
+    @staticmethod
     def save_model(self, model_dict, model_name):
-        """Save model and its scaler to files"""
-        if not os.path.exists('models'):
-            os.makedirs('models')
-        
-        base_filename = f"{model_name}"
-        
+        """Save model and its scaler to bytes for downloading"""
         if hasattr(model_dict['model'], 'feature_names_in_'):
             model_dict['scaler'].feature_names_in_ = model_dict['model'].feature_names_in_
         elif hasattr(st.session_state, 'features'):
             model_dict['scaler'].feature_names_in_ = np.array(st.session_state.features)
         
-        model_path = os.path.join('models', f"{base_filename}_model.joblib")
-        scaler_path = os.path.join('models', f"{base_filename}_scaler.joblib")
+        # Save model and scaler to bytes
+        model_bytes = io.BytesIO()
+        scaler_bytes = io.BytesIO()
         
-        joblib.dump(model_dict['model'], model_path)
-        joblib.dump(model_dict['scaler'], scaler_path)
+        joblib.dump(model_dict['model'], model_bytes)
+        joblib.dump(model_dict['scaler'], scaler_bytes)
         
-        return model_path, scaler_path
+        return model_bytes.getvalue(), scaler_bytes.getvalue()
 
     def train_and_evaluate_model(self, clf_dict, X_train, X_test, y_train, y_test, model_name):
         """Train and evaluate a single model"""
@@ -184,7 +182,7 @@ class ModelManager:
             accuracy = accuracy_score(y_test, y_pred)
             training_time = time.time() - start_time
             
-            model_path, scaler_path = self.save_model(clf_dict, model_name)
+            model_bytes, scaler_bytes = self.save_model(clf_dict, model_name)
             conf_matrix = confusion_matrix(y_test, y_pred)
             
             return {
@@ -194,8 +192,8 @@ class ModelManager:
                 'model': clf_dict['model'],
                 'predictions': y_pred,
                 'status': 'success',
-                'scaler': scaler_path,
-                'model_path': model_path,
+                'scaler_bytes': scaler_bytes,
+                'model_bytes': model_bytes,
                 'confusion_matrix': conf_matrix
             }
         except Exception as e:
@@ -206,8 +204,8 @@ class ModelManager:
                 'model': None,
                 'predictions': None,
                 'status': f'failed: {str(e)}',
-                'scaler': None,
-                'model_path': None,
+                'scaler_bytes': None,
+                'model_bytes': None,
                 'confusion_matrix': None
             }
 
@@ -401,7 +399,7 @@ class StreamlitUI:
     def setup_page_config(self):
         """Configure the Streamlit page"""
         st.set_page_config(
-            page_title="ML Model Generator & Implementations",
+            page_title="ML Model Generator & Implementation",
             page_icon="🤖",
             layout="wide",
             menu_items={
@@ -914,25 +912,46 @@ class StreamlitUI:
         st.plotly_chart(fig_summary, use_container_width=True)
 
     def display_saved_models(self):
-        """Display saved models information"""
-        st.subheader("Saved Models")
+        """Display saved models information and download buttons"""
+        st.subheader("Download Trained Models")
+        
         saved_models = []
         for result in st.session_state.model_results:
-            if result['status'] == 'success' and result['model_path']:
+            if result['status'] == 'success':
                 saved_models.append({
                     'Model': result['model_name'],
                     'Accuracy': result['accuracy'],
-                    'Model Path': result['model_path'],
-                    'Scaler Path': result['scaler']
+                    'model_bytes': result['model_bytes'],
+                    'scaler_bytes': result['scaler_bytes']
                 })
         
         if saved_models:
-            saved_df = pd.DataFrame(saved_models)
-            st.dataframe(saved_df.style.format({
-                'Accuracy': '{:.4f}'
-            }))
+            # Create columns for the table and download buttons
+            for model in saved_models:
+                col1, col2, col3 = st.columns([2, 1, 1])
+                
+                with col1:
+                    st.write(f"**{model['Model']}** (Accuracy: {model['Accuracy']:.4f})")
+                
+                with col2:
+                    st.download_button(
+                        label="Download Model",
+                        data=model['model_bytes'],
+                        file_name=f"{model['Model']}_model.joblib",
+                        mime="application/octet-stream",
+                    )
+                
+                with col3:
+                    st.download_button(
+                        label="Download Scaler",
+                        data=model['scaler_bytes'],
+                        file_name=f"{model['Model']}_scaler.joblib",
+                        mime="application/octet-stream",
+                    )
+                
+                st.markdown("---")
         else:
-            st.info("No models were saved. Models are saved automatically when accuracy exceeds 0.5")
+            st.info("No models are available for download. Train models first.")
 
     def display_download_section(self):
         """Display dataset download section"""
@@ -1193,7 +1212,7 @@ class StreamlitUI:
         self.setup_page_config()
         self.initialize_session_state()
         
-        st.title("ML Model Generatorssss")
+        st.title("ML Model Generator")
         
         # Get data source choice
         data_source = self.get_data_source()
