@@ -21,8 +21,50 @@ def setup_page_config():
         layout="wide"
     )
 
+def page_introduction():
+    """Display the introduction section of the page"""
+    st.title("Machine Learning Algorithm Education 🎓")
+    
+    st.markdown("""
+    Welcome to the Algorithm Education page! This interactive guide helps you understand various machine learning 
+    algorithms used in classification tasks. Each algorithm is explained in detail with:
+
+    - 📝 Clear descriptions and explanations
+    - ✅ Advantages and limitations
+    - 🎯 Practical use cases
+    - 📊 Mathematical foundations
+    - 💻 Implementation examples
+    - 🔬 Interactive demonstrations
+    
+    ### How to Use This Guide
+    1. Select an algorithm from the dropdown menu below
+    2. Explore its characteristics and implementation details
+    3. Try the interactive demo with different datasets
+    4. Compare performance metrics and visualizations
+    
+    ### Available Algorithms
+    This guide covers popular classification algorithms including:
+    - Naive Bayes variants
+    - Support Vector Machines
+    - Neural Networks
+    - Tree-based methods
+    - Nearest Neighbors
+    - Linear Classifiers
+    - Ensemble Methods
+    
+    ### Why Understanding Algorithms Matters
+    Choosing the right algorithm for your machine learning task is crucial for:
+    - Achieving optimal performance
+    - Efficient resource utilization
+    - Meeting specific problem constraints
+    - Understanding model behavior and limitations
+    """)
 
 def algorithm_info():
+    """Display detailed algorithm information"""
+    # First show the introduction
+    page_introduction()
+    
     algorithms = {
         "Gaussian Naive Bayes (GaussianNB)": {
             "description": """
@@ -774,12 +816,6 @@ ada.fit(X_scaled, y)
                 ]
             }
         }.get(algo_name, {})
-
-    st.title("Machine Learning Algorithm Education")
-    st.write("""
-    This page provides detailed information about the machine learning algorithms used in this application. 
-    Select an algorithm to learn more about its characteristics, advantages, disadvantages, and use cases.
-    """)
 
     # Algorithm selector
     selected_algo = st.selectbox(
