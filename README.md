@@ -2,6 +2,10 @@
 
 A comprehensive Streamlit application for generating synthetic data, training machine learning models, and educational visualization of algorithm performance.
 
+## Live Demo
+
+**[Try the application online!](https://projectsyntheticdatageneration.streamlit.app/)**
+
 ## Overview
 
 This application provides an end-to-end platform for:
