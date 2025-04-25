@@ -35,6 +35,7 @@ def page_introduction():
     - 📊 Mathematical foundations
     - 💻 Implementation examples
     - 🔬 Interactive demonstrations
+    - 📚 Academic references
     
     ### How to Use This Guide
     1. Select an algorithm from the dropdown menu below
@@ -112,7 +113,30 @@ def algorithm_info():
                 - P(xᵢ|y) is the likelihood of feature xᵢ given class y
                 - μy and σ²y are the mean and variance of features in class y
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "Naive Bayes and Text Classification",
+                    "authors": "Sebastian Raschka",
+                    "publication": "arXiv preprint",
+                    "year": "2014",
+                    "url": "https://arxiv.org/abs/1410.5329"
+                },
+                {
+                    "title": "scikit-learn: Machine Learning in Python",
+                    "authors": "Pedregosa et al.",
+                    "publication": "Journal of Machine Learning Research",
+                    "year": "2011",
+                    "url": "https://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html"
+                },
+                {
+                    "title": "Fundamental Mathematical Formulas Used in Machine Learning",
+                    "authors": "Showmik Setta",
+                    "publication": "Medium",
+                    "year": "2023",
+                    "url": "https://medium.com/@showmiklovesport/fundamental-mathematical-formulas-used-in-machine-learning-beginner-21c0843e61e0"
+                }
+            ]
         },
         "Linear Support Vector Classification (LinearSVC)": {
             "description": """
@@ -162,7 +186,30 @@ def algorithm_info():
                 - yᵢ are the true labels (±1)
                 - xᵢ are the input features
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "A Tutorial on Support Vector Machines for Pattern Recognition",
+                    "authors": "Christopher J.C. Burges",
+                    "publication": "Data Mining and Knowledge Discovery",
+                    "year": "1998",
+                    "url": "https://link.springer.com/article/10.1023/A:1009715923555"
+                },
+                {
+                    "title": "Support Vector Machines",
+                    "authors": "Andrew Ng",
+                    "publication": "CS229 Lecture Notes, Stanford University",
+                    "year": "2018",
+                    "url": "http://cs229.stanford.edu/notes/cs229-notes3.pdf"
+                },
+                {
+                    "title": "Machine Learning Algorithms: Mathematical Deep Dive",
+                    "authors": "Vidushi Meel",
+                    "publication": "viso.ai",
+                    "year": "2021",
+                    "url": "https://viso.ai/deep-learning/machine-learning-algorithms-mathematical-guide/"
+                }
+            ]
         },
         "Support Vector Classification (SVC)": {
             "description": """
@@ -211,7 +258,30 @@ def algorithm_info():
                 - αᵢ are the dual coefficients
                 - ξᵢ are the slack variables
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "Support Vector Networks",
+                    "authors": "Cortes C., Vapnik V.",
+                    "publication": "Machine Learning",
+                    "year": "1995",
+                    "url": "https://link.springer.com/article/10.1007/BF00994018"
+                },
+                {
+                    "title": "A Practical Guide to Support Vector Classification",
+                    "authors": "Hsu, Chang, and Lin",
+                    "publication": "BJU International",
+                    "year": "2003",
+                    "url": "https://www.csie.ntu.edu.tw/~cjlin/papers/guide/guide.pdf"
+                },
+                {
+                    "title": "Machine Learning Algorithms: Mathematical Deep Dive",
+                    "authors": "Vidushi Meel",
+                    "publication": "viso.ai",
+                    "year": "2021",
+                    "url": "https://viso.ai/deep-learning/machine-learning-algorithms-mathematical-guide/"
+                }
+            ]
         },
         "Multi-layer Perceptron (MLPClassifier)": {
             "description": """
@@ -260,7 +330,30 @@ def algorithm_info():
                 - bₗ is the bias vector for layer l
                 - σ is the activation function
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "Learning representations by back-propagating errors",
+                    "authors": "Rumelhart, D. E., Hinton, G. E., & Williams, R. J.",
+                    "publication": "Nature",
+                    "year": "1986",
+                    "url": "https://www.nature.com/articles/323533a0"
+                },
+                {
+                    "title": "Gradient-based learning applied to document recognition",
+                    "authors": "LeCun Y., Bottou L., Bengio Y., & Haffner P.",
+                    "publication": "Proceedings of the IEEE",
+                    "year": "1998",
+                    "url": "https://ieeexplore.ieee.org/document/726791"
+                },
+                {
+                    "title": "Fundamental Mathematical Formulas Used in Machine Learning",
+                    "authors": "Showmik Setta",
+                    "publication": "Medium",
+                    "year": "2023",
+                    "url": "https://medium.com/@showmiklovesport/fundamental-mathematical-formulas-used-in-machine-learning-beginner-21c0843e61e0"
+                }
+            ]
         },
         "Extra Trees Classifier": {
             "description": """
@@ -309,7 +402,30 @@ def algorithm_info():
                 - Dₗ and Dᵣ are left and right splits
                 - pₖ is the proportion of class k in the node
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "Extremely randomized trees",
+                    "authors": "Geurts P., Ernst D., & Wehenkel L.",
+                    "publication": "Machine Learning",
+                    "year": "2006",
+                    "url": "https://link.springer.com/article/10.1007/s10994-006-6226-1"
+                },
+                {
+                    "title": "scikit-learn: Machine Learning in Python",
+                    "authors": "Pedregosa et al.",
+                    "publication": "Journal of Machine Learning Research",
+                    "year": "2011",
+                    "url": "https://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html"
+                },
+                {
+                    "title": "Fundamental Mathematical Formulas Used in Machine Learning",
+                    "authors": "Showmik Setta",
+                    "publication": "Medium",
+                    "year": "2023",
+                    "url": "https://medium.com/@showmiklovesport/fundamental-mathematical-formulas-used-in-machine-learning-beginner-21c0843e61e0"
+                }
+            ]
         },
         "Random Forest Classifier": {
             "description": """
@@ -358,7 +474,30 @@ def algorithm_info():
                 - Dₗ and Dᵣ are left and right splits
                 - pₖ is the proportion of class k in the node
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "Random Forests",
+                    "authors": "Breiman L.",
+                    "publication": "Machine Learning",
+                    "year": "2001",
+                    "url": "https://link.springer.com/article/10.1023/A:1010933404324"
+                },
+                {
+                    "title": "An Introduction to Statistical Learning",
+                    "authors": "James G., Witten D., Hastie T., & Tibshirani R.",
+                    "publication": "Springer",
+                    "year": "2013",
+                    "url": "https://www.statlearning.com/"
+                },
+                {
+                    "title": "Machine Learning Algorithms: Mathematical Deep Dive",
+                    "authors": "Vidushi Meel",
+                    "publication": "viso.ai",
+                    "year": "2021",
+                    "url": "https://viso.ai/deep-learning/machine-learning-algorithms-mathematical-guide/"
+                }
+            ]
         },
         "K-Nearest Neighbors (KNeighborsClassifier)": {
             "description": """
@@ -407,7 +546,30 @@ def algorithm_info():
                 - yᵢ are the labels of the k nearest neighbors
                 - weight(d(x,x')) is the weight function based on distance
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "Nearest Neighbor Pattern Classification",
+                    "authors": "Cover T. & Hart P.",
+                    "publication": "IEEE Transactions on Information Theory",
+                    "year": "1967",
+                    "url": "https://ieeexplore.ieee.org/document/1053964"
+                },
+                {
+                    "title": "A Survey of Nearest Neighbor Techniques",
+                    "authors": "Bhatia N. & Vandana",
+                    "publication": "International Journal of Computer Science and Information Security",
+                    "year": "2010",
+                    "url": "https://arxiv.org/abs/1007.0085"
+                },
+                {
+                    "title": "Machine Learning Algorithms: Mathematical Deep Dive",
+                    "authors": "Vidushi Meel",
+                    "publication": "viso.ai",
+                    "year": "2021",
+                    "url": "https://viso.ai/deep-learning/machine-learning-algorithms-mathematical-guide/"
+                }
+            ]
         },
         "Ridge Classifier": {
             "description": """
@@ -457,7 +619,30 @@ def algorithm_info():
                 - y is the target vector
                 - p is the number of features
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "Ridge Regression: Biased Estimation for Nonorthogonal Problems",
+                    "authors": "Hoerl A.E. & Kennard R.W.",
+                    "publication": "Technometrics",
+                    "year": "1970",
+                    "url": "https://www.tandfonline.com/doi/abs/10.1080/00401706.1970.10488634"
+                },
+                {
+                    "title": "The Elements of Statistical Learning",
+                    "authors": "Hastie T., Tibshirani R., & Friedman J.",
+                    "publication": "Springer",
+                    "year": "2009",
+                    "url": "https://web.stanford.edu/~hastie/ElemStatLearn/"
+                },
+                {
+                    "title": "Fundamental Mathematical Formulas Used in Machine Learning",
+                    "authors": "Showmik Setta",
+                    "publication": "Medium",
+                    "year": "2023",
+                    "url": "https://medium.com/@showmiklovesport/fundamental-mathematical-formulas-used-in-machine-learning-beginner-21c0843e61e0"
+                }
+            ]
         },
         "Multinomial Naive Bayes": {
             "description": """
@@ -506,7 +691,30 @@ def algorithm_info():
                 - α is the smoothing parameter
                 - n is the number of features
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "A comparison of event models for naive Bayes text classification",
+                    "authors": "McCallum A. & Nigam K.",
+                    "publication": "AAAI-98 Workshop on Learning for Text Categorization",
+                    "year": "1998",
+                    "url": "https://www.cs.cmu.edu/~knigam/papers/multinomial-aaaiws98.pdf"
+                },
+                {
+                    "title": "An empirical study of the naive Bayes classifier",
+                    "authors": "Rish I.",
+                    "publication": "IJCAI 2001 Workshop on Empirical Methods in Artificial Intelligence",
+                    "year": "2001",
+                    "url": "https://www.researchgate.net/publication/228845263_An_Empirical_Study_of_the_Naive_Bayes_Classifier"
+                },
+                {
+                    "title": "Fundamental Mathematical Formulas Used in Machine Learning",
+                    "authors": "Showmik Setta",
+                    "publication": "Medium",
+                    "year": "2023",
+                    "url": "https://medium.com/@showmiklovesport/fundamental-mathematical-formulas-used-in-machine-learning-beginner-21c0843e61e0"
+                }
+            ]
         },
         "AdaBoost Classifier": {
             "description": """
@@ -555,7 +763,30 @@ def algorithm_info():
                 - εₜ is the weighted error rate
                 - wᵢ,ₜ is the weight of sample i at iteration t
                 """
-            }
+            },
+            "references": [
+                {
+                    "title": "A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting",
+                    "authors": "Freund Y. & Schapire R.E.",
+                    "publication": "Journal of Computer and System Sciences",
+                    "year": "1997",
+                    "url": "https://www.sciencedirect.com/science/article/pii/S002200009791504X"
+                },
+                {
+                    "title": "Experiments with a New Boosting Algorithm",
+                    "authors": "Freund Y. & Schapire R.E.",
+                    "publication": "International Conference on Machine Learning",
+                    "year": "1996",
+                    "url": "https://icml.cc/Conferences/1996/papers/boosting.pdf"
+                },
+                {
+                    "title": "Machine Learning Algorithms: Mathematical Deep Dive",
+                    "authors": "Vidushi Meel",
+                    "publication": "viso.ai",
+                    "year": "2021",
+                    "url": "https://viso.ai/deep-learning/machine-learning-algorithms-mathematical-guide/"
+                }
+            ]
         }
     }
 
@@ -900,6 +1131,19 @@ ada.fit(X_scaled, y)
                         st.pyplot(demo_results['learning_curve_plot'])
                 except Exception as e:
                     st.error(f"Error running demo: {str(e)}")
+
+        # Add a references section to display in the UI
+        if st.checkbox("Show References"):
+            st.subheader("Academic References")
+            if "references" in algorithms[selected_algo]:
+                for ref in algorithms[selected_algo]["references"]:
+                    st.markdown(f"**{ref['title']}**")
+                    st.markdown(f"*{ref['authors']}* ({ref['year']})")
+                    st.markdown(f"Published in: {ref['publication']}")
+                    st.markdown(f"[Link to Publication]({ref['url']})")
+                    st.markdown("---")
+            else:
+                st.write("No references available for this algorithm.")
 
 def run_algorithm_demo(algorithm_name, dataset_name):
     """Run a demo of the selected algorithm on the chosen dataset."""
